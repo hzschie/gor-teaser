@@ -110,7 +110,7 @@ main {
 /* Scroll anchor offset */
 section[id],
 div[id] {
-    scroll-margin-top: 1rem;
+    scroll-margin-top: 2rem;
 }
 
 /* Header and Navigation */
@@ -414,13 +414,13 @@ div[id] {
     width: 100%;
     max-width: 800px;
     margin: 0 auto;
-    text-align: center;
+    /* text-align: center; */
     color: white;
 }
 
 .memorial-hero .section-title {
     font-size: 3rem;
-    font-weight: 600;
+    font-weight: 400;
     margin-bottom: 2rem;
     color: white;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
@@ -435,17 +435,19 @@ div[id] {
 }
 
 /* Section Styles */
-.section-title {
-    font-size: 2.5rem;
-    font-weight: 600;
-    text-align: center;
+.section-title,
+h2.section-title {
+    font-size: 4.5rem;
+    font-weight: 400;
+    line-height: 4.5rem;
+    text-align: left;
     margin-bottom: 3rem;
     color: #2D3C5B;
     position: relative;
     font-family: 'Untitled Serif', Georgia, serif;
 }
 
-.section-title::after {
+/* .section-title::after {
     content: '';
     position: absolute;
     bottom: -10px;
@@ -455,7 +457,7 @@ div[id] {
     height: 4px;
     background: linear-gradient(135deg, #2D3C5B 0%, #4a7c59 100%);
     border-radius: 2px;
-}
+} */
 /* @media (max-width: 480px) {
     .section-title {
         font-size: 2rem;
@@ -1025,7 +1027,7 @@ div[id] {
 .section-intro {
     font-size: 1rem;
     color: #263238;
-    text-align: center;
+    /* text-align: center; */
     margin-bottom: 3rem;
     max-width: 800px;
     margin-left: auto;
@@ -1042,6 +1044,7 @@ div[id] {
 .history-detailed h3 {
     color: #2D3C5B;
     font-size: 1.8rem;
+    font-weight: 400;
     /* margin-bottom: 1.5rem; */
     font-family: 'Untitled Serif', Georgia, serif;
 }
@@ -1086,7 +1089,7 @@ div[id] {
     color: #2D3C5B;
     margin-bottom: 0.5rem;
     font-size: 2rem;
-    font-weight: 600;
+    font-weight: 400;
     font-family: 'Untitled Serif', Georgia, serif;
 }
 
@@ -1381,6 +1384,7 @@ div[id] {
 .impressum-content h2 {
     font-family: 'Untitled Serif', Georgia, serif;
     font-size: 2rem;
+    font-weight: 400;
     color: #2c5530;
     margin-bottom: 1.5rem;
     text-align: center;
@@ -1454,6 +1458,7 @@ body.subpage {
 .subpage-content h1 {
     font-family: 'Untitled Serif', Georgia, serif;
     font-size: 2.5rem;
+    font-weight: 400;
     color: #2D3C5B;
     margin-bottom: 1.5rem;
 }
@@ -1643,9 +1648,10 @@ body.subpage {
         border-radius: 8px;
     }
 
-    .section-title {
-        font-size: 1.5rem;
-        line-height: 1.3;
+    .section-title,
+    h2.section-title {
+        font-size: 2rem;
+        line-height: 2rem;
     }
 
     .nav-container {
@@ -1891,7 +1897,7 @@ img:not([src$=".svg"]) {
     color: #2D3C5B;
     margin-bottom: 0.5rem;
     font-family: 'Untitled Serif', Georgia, serif;
-    font-weight: 600;
+    font-weight: 400;
 }
 
 .birthplaces-map-container p {
@@ -2119,6 +2125,7 @@ img:not([src$=".svg"]) {
     margin: 0 0 0.5rem 0;
     font-family: 'Untitled Serif', Georgia, serif;
     font-size: 1.2rem;
+    font-weight: 400;
 }
 
 .pattern-overlay p {
@@ -2271,13 +2278,13 @@ img:not([src$=".svg"]) {
 .interview-hero-content {
     max-width: 900px;
     margin: 0 auto;
-    text-align: center;
+    /* text-align: center; */
 }
 
 .interview-hero .section-title {
     color: white;
     margin-bottom: 1.5rem;
-    font-size: 2.5rem;
+    font-size: 4.5rem;
 }
 
 .interview-hero .section-title::after {
@@ -2285,10 +2292,10 @@ img:not([src$=".svg"]) {
 }
 
 .interview-intro {
-    font-size: 1.1rem;
+    font-size: 1rem;
     line-height: 1.8;
     color: rgba(255, 255, 255, 0.95);
-    max-width: 800px;
+    /* max-width: 800px; */
     margin: 0 auto;
 }
 
@@ -2384,6 +2391,7 @@ img:not([src$=".svg"]) {
     color: #2c5530;
     margin-bottom: 2.5rem;
     font-family: 'Untitled Serif', Georgia, serif;
+    font-weight: 400;
 }
 
 .team-bios .bio {
