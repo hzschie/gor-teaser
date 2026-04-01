@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Slider Test</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: #f5f5f5;
+        }
+        
+        .test-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .image-comparison {
+            width: 100%;
+            margin: 2rem 0;
+        }
+
+        .image-comparison-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            cursor: col-resize;
+            user-select: none;
+        }
+
+        .image-comparison-container.dragging {
+            cursor: col-resize !important;
+        }
+
+        .image-comparison-container.dragging * {
+            cursor: col-resize !important;
+            user-select: none !important;
+            pointer-events: none;
+        }
+
+        .image-comparison-container.dragging .comparison-slider,
+        .image-comparison-container.dragging .slider-handle {
+            pointer-events: all;
+        }
+
+        .comparison-image {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .image-before-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 2;
+        }
+
+        .image-before {
+            width: 200%;
+            height: 100%;
+            object-fit: cover;
+            object-position: left center;
+        }
+
+        .comparison-slider {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 3px;
+            height: 100%;
+            background: #fff;
+            z-index: 3;
+            cursor: col-resize;
+            transform: translateX(-50%);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .slider-handle {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 40px;
+            height: 40px;
+            background: #fff;
+            border: 2px solid #2D3C5B;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: col-resize;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            z-index: 10;
+            user-select: none;
+        }
+
+        .slider-handle:hover,
+        .image-comparison-container.dragging .slider-handle {
+            background: #2D3C5B;
+            color: #fff;
+            transform: translate(-50%, -50%) scale(1.1);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .slider-handle .material-icons {
+            font-size: 20px;
+            color: inherit;
+        }
+
+        .comparison-labels {
+            position: absolute;
+            top: 10px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 20px;
+            z-index: 4;
+            pointer-events: none;
+        }
+
+        .label-before,
+        .label-after {
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <h1>Image Comparison Slider Test</h1>
+        
+        <div class="image-comparison">
+            <div class="image-comparison-container">
+                <img src="assets/Luftbild_2024.jpg" alt="Aerial view 2024" class="comparison-image image-after">
+                <div class="image-before-overlay">
+                    <img src="assets/Luftbild_1945.jpg" alt="Aerial view 1945" class="comparison-image image-before">
+                </div>
+                <div class="comparison-slider">
+                    <div class="slider-handle">
+                        <span class="material-icons">drag_indicator</span>
+                    </div>
+                </div>
+                <div class="comparison-labels">
+                    <span class="label-before">1945</span>
+                    <span class="label-after">2024</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Image Comparison Slider
+        function initImageComparison() {
+            const container = document.querySelector('.image-comparison-container');
+            if (!container) {
+                console.log('Image comparison container not found');
+                return;
+            }
+
+            const beforeOverlay = container.querySelector('.image-before-overlay');
+            const slider = container.querySelector('.comparison-slider');
+            
+            if (!beforeOverlay || !slider) {
+                console.log('Image comparison elements not found');
+                return;
+            }
+
+            let isDragging = false;
+
+            function updateSlider(x) {
+                const containerRect = container.getBoundingClientRect();
+                const containerWidth = containerRect.width;
+                let position = ((x - containerRect.left) / containerWidth) * 100;
+                
+                // Constrain position between 0 and 100
+                position = Math.max(0, Math.min(100, position));
+                
+                beforeOverlay.style.width = position + '%';
+                slider.style.left = position + '%';
+                
+                console.log('Slider position:', position + '%');
+            }
+
+            function startDrag(e) {
+                console.log('Start drag');
+                e.preventDefault();
+                isDragging = true;
+                container.classList.add('dragging');
+                document.body.style.userSelect = 'none';
+                document.body.style.cursor = 'col-resize';
+                
+                const clientX = e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+                updateSlider(clientX);
+            }
+
+            function drag(e) {
+                if (!isDragging) return;
+                
+                console.log('Dragging');
+                e.preventDefault();
+                const clientX = e.type === 'touchmove' ? e.touches[0].clientX : e.clientX;
+                updateSlider(clientX);
+            }
+
+            function stopDrag(e) {
+                if (!isDragging) return;
+                
+                console.log('Stop drag');
+                e.preventDefault();
+                isDragging = false;
+                container.classList.remove('dragging');
+                document.body.style.userSelect = '';
+                document.body.style.cursor = '';
+            }
+
+            // Mouse events
+            container.addEventListener('mousedown', startDrag);
+            slider.addEventListener('mousedown', startDrag);
+            document.addEventListener('mousemove', drag);
+            document.addEventListener('mouseup', stopDrag);
+
+            // Touch events for mobile
+            container.addEventListener('touchstart', startDrag, { passive: false });
+            slider.addEventListener('touchstart', startDrag, { passive: false });
+            document.addEventListener('touchmove', drag, { passive: false });
+            document.addEventListener('touchend', stopDrag);
+
+            console.log('Image comparison slider initialized successfully');
+        }
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initImageComparison);
+    </script>
+</body>
+</html>

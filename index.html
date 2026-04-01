@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gedenkort Reichenau - Arbeitserziehungslager Reichenau</title>
+    <meta name="description" content="Gedenkstätte für das Arbeitserziehungslager Reichenau (1941-1945) - Gedenken an die Opfer der nationalsozialistischen Verfolgung in Innsbruck, Österreich.">
+    <link rel="stylesheet" href="css/styles.css">
+    <!-- MapLibre GL JS (open source, cookie-free) -->
+    <link href='https://unpkg.com/maplibre-gl@4.1.0/dist/maplibre-gl.css' rel='stylesheet' />
+    <script src='https://unpkg.com/maplibre-gl@4.1.0/dist/maplibre-gl.js'></script>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-container">
+                <a href="#home" class="logo">
+                    <img src="assets/gor-logo-white.svg" alt="Gedenkort Reichenau" class="logo-img">
+                </a>
+                <ul class="nav-menu">
+                    <li><a href="#camp" class="nav-link">Das Lager</a></li>
+                    <li><a href="#history" class="nav-link">Geschichte</a></li>
+                    <li><a href="#remembrance" class="nav-link">Gedenken</a></li>
+                    <li><a href="#memorial" class="nav-link">Neues Denkmal</a></li>
+                    <li><a href="interview.html" class="nav-link">Interview</a></li>
+                </ul>
+                <div class="hamburger" id="hamburger-menu">
+                    <span class="material-icons">menu</span>
+                </div>
+                <!-- Mobile Menu Overlay -->
+                <div class="mobile-menu" id="mobile-menu">
+                    <button class="mobile-menu-close" id="mobile-menu-close" aria-label="Menü schließen"><span class="material-icons">close</span></button>
+                    <ul class="mobile-nav-main">
+                        <li><a href="#camp" class="nav-link">Das Lager</a></li>
+                        <li><a href="#history" class="nav-link">Geschichte</a></li>
+                        <li><a href="#remembrance" class="nav-link">Gedenken</a></li>
+                        <li><a href="#memorial" class="nav-link">Neues Denkmal</a></li>
+                        <li><a href="interview.html" class="nav-link">Interview</a></li>
+                        <li><a href="#memorial" class="nav-link">Neues Denkmal</a></li>
+                    </ul>
+                    <div class="mobile-nav-footer">
+                        <ul class="mobile-footer-links">
+                            <li><a href="datenschutz.html">Datenschutz</a></li>
+                            <li><a href="impressum.html">Impressum</a></li>
+                            <li><a href="barrierefreiheit.html">Barrierefreiheitserklärung</a></li>
+                        </ul>
+                        <div class="mobile-footer-logos">
+                            <img src="assets/gor-logo.svg" alt="GoR Logo" class="footer-logo">
+                            <img src="assets/ibk-logo.svg" alt="IBK Logo" class="footer-logo">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="home" class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1 class="hero-title">Arbeitserziehungslager Reichenau</h1>
+                    <p class="hero-subtitle">Ein Gedenkort für die Toten des AEL Reichenau (1941-1945)</p>
+                    <!-- <p class="hero-description">Remembering the 8,500 individuals imprisoned and the 114 lives lost at this Nazi camp in Innsbruck, Austria.</p> -->
+                    <!-- <button class="cta-button" onclick="scrollToSection('camp')">Learn About the Camp</button> -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Arbeitserziehungslager Reichenau Section -->
+        <section id="camp" class="about">
+            <div class="container">
+                <h2 class="section-title">Arbeitserziehungslager Reichenau</h2>
+                <div class="about-content">
+                    <div class="about-text">
+                        <p>Von 1941 bis 1945 wurden im Arbeitserziehungslager Reichenau circa 8.500 Menschen festgehalten. Hier herrschten unmenschliche Lebensbedingungen, Willkür und Gewalt. Bisher sind 115 Personen – darunter zwei Frauen – aus 15 Ländern bekannt, die den Terror mit ihrem Leben bezahlten. Im Lauf der Jahre erfüllte das Lager unterschiedliche Funktionen. Zuerst war es ein Arbeitserziehungslager für in- und ausländische Arbeiter. Später wurden auch politisch verdächtige Personen hierher gebracht. Außerdem diente es als Transitlager für italienische Arbeiter sowie für Juden und Jüdinnen, die in Konzentrationslager deportiert wurden.</p>
+                    </div>
+                    <div class="about-image">
+                        <div class="image-comparison">
+                            <div class="image-comparison-container" style="--range: 50%;">
+                                <!-- Image Wrapper (for zoomed mode positioning) -->
+                                <div class="image-wrapper">
+                                    <!-- Background Image (2024) -->
+                                    <div class="image-background">
+                                        <img src="assets/Luftbild_2024.jpg" alt="Luftbild des ehemaligen Lagergeländes Reichenau 2024" class="comparison-img">
+                                    </div>
+                                    
+                                    <!-- Foreground Image (1945) -->
+                                    <div class="image-foreground">
+                                        <img src="assets/Luftbild_1945.jpg" alt="Luftbild des Lagers Reichenau 1945" class="comparison-img">
+                                    </div>
+                                    
+                                    <!-- Range Slider -->
+                                    <input class="comparison-slider" type="range" min="0" max="100" step="0.1" value="50" 
+                                           oninput="this.closest('.image-comparison-container').style.setProperty('--range', this.value + '%')">
+                                    
+                                    <!-- Labels -->
+                                    <div class="comparison-labels">
+                                        <span class="label-before">1945</span>
+                                        <span class="label-after">2024</span>
+                                    </div>
+                                    
+                                    <!-- Close Button (only visible when zoomed) -->
+                                    <button class="close-button" onclick="toggleZoom()" title="Close">
+                                        <span class="material-icons">close</span>
+                                    </button>
+                                </div>
+                                
+                                <!-- Zoom Button (only visible when not zoomed) -->
+                                <button class="zoom-button" onclick="toggleZoom()" title="Click to enlarge">
+                                    <span class="material-icons">open_in_full</span>
+                                </button>
+                            </div>
+                            
+                            <!-- Image Description -->
+                            <div class="image-description">
+                                <p>Ziehen Sie den Schieberegler, um die 1945 sichtbaren Lagerstrukturen mit der modernen Industrie- und Gewerbeentwicklung zu vergleichen, die heute das Gelände einnimmt.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History of the Camp Section -->
+        <section id="history" class="about">
+            <div class="container">
+                <h2 class="section-title">Die Geschichte des „Arbeitserziehungslager Reichenau“</h2>
+                <div class="history-detailed">
+                    <p>Die Zwangsarbeit in der Zeit des Nationalsozialismus ist beispiellos. Mehr als 20 Millionen Menschen wurden überall im Deutschen Reich und in den besetzten Gebieten eingesetzt – in Rüstungsbetrieben, auf Baustellen, in der Landwirtschaft, im Handwerk oder in Privathaushalten. Mit keinem anderen nationalsozialistischen Verbrechen wurden so viele Menschen persönlich konfrontiert – als Opfer, Täter oder Zuschauer. Auch im Gau Tirol-Vorarlberg wurden Zwangslager errichtet und Zwangsarbeiterinnen und Zwangsarbeiter eingesetzt.</p>
+                    <p>Diese Karte von Österreich zeigt alle bekannten NS-Lager, basierend auf einer Datenbank von Horst Schreiber. Klicken Sie auf einen Marker, um mehr Details zum Lager zu sehen.</p>
+                    
+                    <!-- Historical Context Map -->
+                    <div id="map-container">
+                        <!-- Filter Controls -->
+                        <div id="map-controls" class="map-controls">
+                            <button id="filter-toggle-btn" class="filter-toggle-btn" aria-label="Toggle filters">
+                                <span class="material-icons">filter_list</span>
+                            </button>
+                            <div class="checkbox-group">
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="toggle-zwangsarbeiterlager" checked>
+                                    <span class="material-icons checkmark zwangsarbeiterlager">check_box</span>
+                                    Zwangsarbeiterlager
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="toggle-kriegsgefangenenlager" checked>
+                                    <span class="material-icons checkmark kriegsgefangenenlager">check_box</span>
+                                    Kriegsgefangenenlager
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="toggle-umsiedlungslager" checked>
+                                    <span class="material-icons checkmark umsiedlungslager">check_box</span>
+                                    Umsiedlungslager
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="toggle-kz" checked>
+                                    <span class="material-icons checkmark kz">check_box</span>
+                                    KZ
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="toggle-aussenlager" checked>
+                                    <span class="material-icons checkmark aussenlager">check_box</span>
+                                    Außenlager
+                                </label>
+                                <label class="checkbox-label">
+                                    <input type="checkbox" id="toggle-anderes-lager" checked>
+                                    <span class="material-icons checkmark anderes-lager">check_box</span>
+                                    Anderes Lager
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- Map Display -->
+                        <div id="mapbox-map"></div>
+
+                        <!-- Zoom Controls -->
+                        <div class="map-zoom-controls">
+                            <button id="zoom-in-btn" class="zoom-btn" aria-label="Zoom in">
+                                <span class="material-icons">add</span>
+                            </button>
+                            <button id="zoom-out-btn" class="zoom-btn" aria-label="Zoom out">
+                                <span class="material-icons">remove</span>
+                            </button>
+                        </div>
+
+                        <!-- Sidebar -->
+                        <div id="map-sidebar" class="map-sidebar collapsed">
+                            <div id="sidebar-toggle" class="sidebar-toggle">
+                                <span class="material-icons">info</span>
+                            </div>
+                            <div id="sidebar-content" class="sidebar-content">
+                                <button id="sidebar-close-btn" class="sidebar-close-btn" aria-label="Close sidebar">
+                                    <span class="material-icons">close</span>
+                                </button>
+                                <div id="camp-details">
+                                    <p>Klicken Sie auf einen Lager-Marker, um detaillierte Informationen anzuzeigen.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about-content">
+                        <div class="about-text">
+                            <p>In Innsbruck entstanden mehrere Lager, wobei der größte Lagerkomplex auf einem Teil des Geländes des heutigen Gewerbegebietes Rossau entstand. Einen Teil des Komplexes bildete ein Auffanglager der Gestapo für geflohene italienische Arbeitskräfte, das so genannte Arbeitserziehungslager Reichenau. Nördlich des dieses Lagers wurde ein Zwangsarbeits- und Kriegsgefangenenlager errichtet, das von der Stadt Innsbruck, der Reichsbahn und der Reichspost betrieben wurde. Somit bestand der Lagerkomplex aus dem Arbeitserziehungslager Reichenau und dem Lager Nord.</p>
+                            
+                            <p>Die Bauarbeiten für das Arbeitserziehungslager Reichenau begannen im Herbst 1941 und bereits Anfang 1942 wurden dort als „Arbeitsbummelanten“ bezeichnete Menschen interniert, die durch unmenschliche Disziplinierungsmaßnahmen im Sinne einer NS-Arbeitsmoral „erzogen“ werden sollten. Ab 1943 diente das Arbeitserziehungslager Reichenau zudem als Internierungslager für politisch verdächtige Personen, als Transitlager für italienische Arbeiter aus Norditalien, welche nach der Besetzung Italiens aus politischen Gründen deportiert worden waren, für italienische, britische, österreichische und andere Jüdinnen und Juden sowie für österreichische und slowenische Häftlinge aus einem aufgelösten Arbeitserziehungslager in Kärnten. Schätzungen zufolge waren zwischen 1941 und 1945 im Arbeitserziehungslager Reichenau 8.500 bis 8.600 Menschen, im Lager Nord bis zu 700 Personen interniert.</p>
+                        </div>
+                        
+                        <!-- Birthplaces Map -->
+                        <div class="birthplaces-map-container">
+                            <h3>Herkunft der Opfer</h3>
+                            <p>Die folgende Karte zeigt die Geburtsorte der 115 Opfer, die im Lager Reichenau starben. Linien verbinden jeden Ort mit Innsbruck und veranschaulichen das internationale Ausmaß der Verfolgung.</p>
+                            <div id="birthplaces-map"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Guards and Camp Operations Section -->
+                    <p>Bis Mai 1943 bestand die Lagerwache aus rund 30 Männern der SS, die jedoch nach und nach zur Wehrmacht einrückten. Zur Unterstützung der Gestapo folgten dienstverpflichtete, meist ältere Gendarmeriebeamte oder Polizisten, ab dem Herbst 1944 baltische Hilfspolizisten.</p>
+
+                    <p>Der Wandel des Arbeitserziehungslagers Reichenau – von der Disziplinierung und „Erziehung zur Arbeit“ bis hin zur Internierung und Durchgangsstation auf dem Weg in ein Konzentrationslager oder zum Arbeitseinsatz im Deutschen Reich – schlug sich in der Zahl der Toten nieder. Sie stieg ab 1943 signifikant und erreichte 1944 den Höhepunkt. Dank umfangreicher Recherchen in in- und ausländischen Archiven wissen wir nun, dass mindestens 115 Menschen im Arbeitserziehungslager Reichenau selbst bzw. in Folge dort erlittener Verletzungen und Qualen in der Klinik oder im Krankenhaus Hall starben. Die biografischen Eckdaten der Toten sind aufgrund der Forschungen nun bekannt.</p>
+                    
+                    <div class="remembrance-content">
+                        <p>Nach der Befreiung Tirols im Mai 1945 wurde der Lagerkomplex u.a. als Heeresentlassungsstelle, Internierungslager für ehemalige Nazis, Unterkunft für Vertriebene und Geflohene genutzt. Im Jahr 1948 wurden die Baracken von der Stadt Innsbruck zu Notwohnungen für Vertriebene und Wohnungslose, also Menschen in prekären sozialen Situationen, umgewandelt. Der Lagerkomplex wurde 20 Jahre lang, bis zum endgültigen Abbruch der letzten Baracken im Jahr 1968, weitergenutzt. Mit dem Abriss der letzten Baracken begann die Transformation des Areals in ein rasant wachsendes Gewerbegebiet. Auf dem Areal des ehemaligen Arbeitserziehungslagers Reichenau und Teilen des Lagers Nord errichtete die Stadt Innsbruck ab den späten 1960er Jahren ihren Bau- und Recyclinghof.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- History of Remembrance Section -->
+        <section id="remembrance" class="about">
+            <div class="container">
+                <h2 class="section-title">Die Geschichte des Gedenkens</h2>
+                <div class="remembrance-content">
+                    <div class="about-content">
+                        <div class="about-text">
+                            <p>Auf Anregung des Bundesdenkmalamtes wurde im Mai 2023 eine punktuelle archäologische Grabung durchgeführt, um die einzelnen Gebäude und Baracken auf dem Lagergelände in der Rossau und deren Nutzung zu identifizieren. Anhand dutzender bisher unbekannter Luftbilder aus dem Zweiten Weltkrieg konnte eine überaus präzise Zuordnung getroffen werden.</p>
+                        </div>
+                        <div class="about-image">
+                            <div class="zoomable-image-container">
+                                <img src="assets/Glasscherben.png" alt="Archäologische Funde und Glasscherben aus der Grabung 2023 auf dem Rossau-Lagergelände" class="zoomable-image">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="remembrance-text">
+                        
+                        <p>Im selben Jahr, in dem die letzte Baracke des Arbeitserziehungslagers Reichenau abgetragen wurde, regte der Bund der Opfer des politischen Freiheitskampfes in Tirol bei der Stadt Innsbruck die Errichtung einer Gedenkstätte in der Nähe des ehemaligen Lagergeländes an. 1971, drei Jahre später, wandte sich die Arbeitsgemeinschaft Vaterlandstreuer Verbände Tirols erneut an die Stadtgemeinde mit dem Ersuchen, ein Denkmal für die Opfer des Lagers „westlich der Einfahrt zum Zentralhof“ aufzustellen. Das Denkmal wurde schlussendlich östlich der Einfahrt zum Recyclinghof errichtet. Die Kosten betrugen damals 226.000 Schilling. </p>
+                        
+                        <p>Am Nationalfeiertag, dem 26. Oktober 1972, enthüllte Bürgermeister Alois Lugger im Beisein zahlreicher ausländischer Delegationen und Spitzen der Behörden das vom Wiener Bildhauer Franz Anton Coufal entworfene Gedenkzeichen mit folgender Inschrift:</p>
+                        
+                        <blockquote class="memorial-inscription">
+                            <p>Hier stand in den Jahren 1939 bis 1945 das Gestapo- Auffanglager Reichenau, in dem Patrioten aus allen von NationaIsozialismus besetzten Ländern inhaftiert und gefoltert wurden. Viele von ihnen fanden hier den Tod.</p>
+                        </blockquote>
+                       
+                        <div class="about-content">
+                            <div class="about-text">
+                                <p>Ergänzt wurde das Denkmal im Jahr 2008 durch einen kleinen Gedenkstein mit einer Inschrift, entworfen von Johannes und Matthias Breit, die an italienische Arbeiter der Industriebetriebe von Sesto San Giovanni erinnern. Sie waren wegen ihres Widerstandes ins Arbeitserziehungslager Reichenau deportiert worden. Seither fanden in unregelmäßigen Abständen privat organisierte Gedenkfeiern beim Denkmal statt, an denen bis vor einigen Jahren immer wieder auch Institutionen und Vereine aus verschiedenen Herkunftsländern von Insassen des Arbeitserziehungslagers Reichenau teilnahmen.</p>
+                                
+                                <p>Das Denkmal ist als historische Errungenschaft und Setzung zu würdigen, entspricht jedoch in keiner Weise mehr den Anforderungen an eine zeitgemäße Erinnerungskultur. Die Inschrift ist inhaltlich nicht korrekt, die Ästhetik des Denkmals überholt und der Standort neben dem Eingang des städtischen Recyclinghofes denkbar ungeeignet. Vor allem aber ist der aktuelle Ort eines angemessenen Gedenkens an die Opfer und deren Leid nicht würdig.</p>
+                            </div>
+                            <div class="about-image">
+                                <div class="zoomable-image-container">
+                                    <img src="assets/gedenkstein.jpg" alt="Gedenkstein von 2008 zur Erinnerung an italienische Arbeiter aus Sesto San Giovanni" class="zoomable-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The New Memorial Section -->
+        <section id="memorial" class="memorial-hero">
+            <div class="container">
+                <div class="memorial-hero-content">
+                    <h2 class="section-title">Der neue Gedenkort</h2>
+                    <p class="section-intro">Die Geschichte und der Standort des Lagers erfordern eine erneute Auseinandersetzung mit den Schicksalen der damit verbundenen Personen. Alles begann mit einem intensiven historischen und archäologischen Forschungsprozess, um vollständige Kenntnisse über das Lager zu gewährleisten. Auf Grundlage dieses Berichts und der Empfehlungen der Kommission für die Neugestaltung des Denkmals beschloss der Gemeinderat der Landeshauptstadt Innsbruck die Errichtung eines zeitgemäßen Denkmals. Es folgte ein mehrstufiger, internationaler Gestaltungswettbewerb, der sowohl die architektonische Gestaltung als auch ein didaktisches Konzept für das Denkmal abdeckte. Das hier vorgestellte Siegerprojekt stammt von der Arbeitsgemeinschaft Heike Bablick · Ricarda Denzer · Karl-Heinz Machat · Bettina Schlorhaufer · Hermann Zschiegner.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Memorial Gallery Section -->
+        <section class="gallery">
+            <div class="container">
+                <div class="gallery-grid">
+                    <div class="gallery-item">
+                        <img src="assets/Namestone_1.jpg" alt="Namenssteine des Denkmals" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3>Namenssteine</h3>
+                            <p>Betonstelen markieren die Todestage der 115 Opfer entlang einer Zeitachse</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="assets/Namestone_3.jpg" alt="Erinnerungsufer" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3>Erinnerungsufer</h3>
+                            <p>Wellenförmige Erhebung, die die große Zahl der internierten Menschen veranschaulicht</p>
+                        </div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="assets/pavilion-1.jpg" alt="Pavillon des Denkmals" class="gallery-img">
+                        <div class="gallery-overlay">
+                            <h3>Der Pavillon</h3>
+                            <p>Ausstellungsraum mit den Maßen, die an die Baracken aus der NS-Zeit erinnern</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="memorial-details">
+                    <div class="memorial-feature">
+                        <h3>Namenssteine</h3>
+                        <!-- Timeline (Zeitstrahlen) -->
+                        <p>Die Verteilung der Namenssteine erfolgt entsprechend der Todestage der 115 Opfer. Zeitstrahlen markieren die Monate, in denen das Lager bestand. Nachdem in manchen Monaten besonders viele Menschen starben, bilden die Namenssteine stellenweise dichte Gruppen. Auf diese Weise werden die Besucher und Besucherinnen zu unmittelbaren Zeugen der im Lager waltenden Grausamkeit. Bodenelemente bedecken in unterschiedlicher Dichte die Oberfläche einer wellenförmigen Erhebung. Sie veranschaulichen die große Zahl der Menschen, die im Lager interniert waren.</p>
+                        <div class="memorial-feature">
+                            <img src="assets/Zeitstrahlen.svg" alt="Zeitstrahl der chronologischen Entwicklung des Arbeitserziehungslagers Reichenau von 1941 bis 1945" class="memorial-img">
+                            <!-- <p class="memorial-caption">Chronological timeline (Zeitstrahlen) of the Reichenau Labor Education Camp operations and key events from 1941 to 1945</p> -->
+                        </div>
+                        <img src="assets/Namestone-detail.jpg" alt="Namenssteine" class="memorial-img">
+                        <p class="memorial-caption">Die Namenssteine werden aus Beton und Glasterrazzo gegossen, im Höhenverlauf leicht unterschiedlich gefärbt. Die den Besucherinnen und Besuchern zugewandte Fläche wird spiegelnd poliert und mit dem Namen des ermordeten Menschen versehen. Da von den meisten Toten die biografischen Daten und Porträtfotos fehlen, ersetzt die Spiegelung der Besucherinnen und Besucher auf der Namens Fläche das Porträt.</p>
+                    </div>
+                    <div class="memorial-feature">
+                        <h3>Erinnerungsufer</h3>
+                        <p>Die Wellenform des Gedenkorts Reichenau verweist auf das, was unter der Oberfläche liegt, auf das, was nicht sichtbar ist; und auf die Zwischenräume der Fundstücke, auf die Lücken in den Archiven, auf die fehlenden Namen der Opfer eines Terrorregimes.
+</p>
+                    </div>
+
+                    <!-- Landscape Pattern Animation -->
+                    <div class="memorial-feature">
+                        <div class="landscape-pattern-container">
+                            <canvas id="landscapePatternCanvas" class="landscape-pattern-canvas"></canvas>
+                            <!-- <div class="pattern-overlay">
+                                <h4>Memorial Landscape Pattern</h4>
+                                <p>Animated tiles representing the memorial's wave-shaped terrain</p>
+                            </div> -->
+                        </div>
+                    </div>
+                    <div class="memorial-feature">
+                        <h3>Der Pavillon</h3>
+                        <p>Die Dachskulptur des Pavillons besteht aus einer Konstruktion sternförmig gekreuzter Bänder aus Flachstahl. Teils offen, teils geschlossen ausgeführt, ermöglicht dieser obere Abschluss einen Besuch des Informationsbereichs bei jeder Witterung. Die Ausstellung wird durch eine Mischung aus Tages- und Kunstlicht beleuchtet. Im Raum sind Sitzgelegenheiten verteilt. Der Pavillon dient der Vermittlung eines kritischen Blicks auf ein dunkles Kapitel in der Geschichte der Stadt Innsbruck und bietet den Raum für Reflexionen über heutige Verhältnisse – bei uns und international.</p>
+                        <img src="assets/pavilion-detail.jpg" alt="Der Pavillon" class="memorial-img">
+                        <!-- <p class="memorial-caption">The Pavillio description here</p> -->
+                        <img src="assets/Infopanel_C_Ansicht.png" alt="Die Informationstafeln" class="memorial-img transparent-img">
+                        <p class="memorial-caption">Die Informationstafeln für den Pavillon</p>
+                    </div>
+                    
+                    <div class="memorial-feature">
+                        <h3>Der Audioweg</h3>
+                        <div class="about-content">
+                            <div class="about-text">
+                                <p>Im Fokus stehen Berichte von Zeitzeuginnen und Zeitzeugen, Erinnerungen und Biografien von Nachkommen sowie von Häftlingen des Arbeitserziehungslagers Reichenau. Weitere Schwerpunkte liegen auf der Perspektive der Angehörigen von Menschen, die im Lager Verbrechen begangen oder das Leben im Umfeld des Lagers mitbekommen haben. Die künstlerische Intervention verbindet die Idee der archäologischen Sondierung einer Bodenstruktur nach historischen Artefakten mit dem Klang der vorgefundenen (Klang-)Landschaft und dem Hören von Erzählungen. Das Sondieren und Freilegen von Schichtungen wird in der Auseinandersetzung mit dem ehemaligen Arbeitserziehungslager Reichenau, dem Ort, seiner umgebenden Infrastruktur und Natur bis hin zu mündlichen Erzählungen geführt und in Hörstücken für den Audioweg Gedenkort Reichenau umgesetzt. Eine Smartphone-App visualisiert auf einer Karte Wege entlang der Topografie des neuen Gedenkortes und im Umfeld des ehemaligen Arbeitserziehungslagers Reichenau. Jedem Kapitel des Audiowegs ist ein markierter Punkt auf der Karte gewidmet. Die App kann online mit dem eigenen Standort verbunden oder offline genutzt werden und ist kostenlos. Für die Besucherinnen und Besucher ergibt sich ein multidimensionales Hörerlebnis.</p>
+                            </div>
+                            <div class="about-image">
+                                <div class="zoomable-image-container">
+                                    <img src="assets/Audio-Walk.png" alt="Audioweg-Oberfläche mit interaktiver Karte und Hörerlebnis für den Gedenkort Reichenau" class="zoomable-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="memorial-feature">
+                        <h3>Internetseite mit digitalem Archiv</h3>
+                        <p>Integrativer Bestandteil der Gestaltung des Gedenkorts Reichenau ist eine Website als Archiv, Wissens- und Vermittlungsplattform. Zugleich bietet die Website die Möglichkeit, mehrsprachig zu kommunizieren. Hier werden vertiefende Inhalte, neue historische Erkenntnisse und fortlaufend Interviews mit Zeitzeuginnen und Zeitzeugen präsentiert. Zu allen behandelten Themen wurden spezifische Texte verfasst. Sie sollen einem breiten Spektrum an Besucherinnen und Besucher Informationen in einfacher Sprache zugänglich machen. Als didaktische Basis bietet die Website auch die Möglichkeit, Unterrichtsmaterialien zur Verfügung zu stellen und Projektarbeiten einer breiteren Öffentlichkeit vorzustellen.</p>
+                    </div>
+                    
+                    <div class="memorial-feature">
+                        <h3>Gedenkakt am 8. Mai 2025</h3>
+                        <div class="about-content">
+                            <div class="about-text">
+                                <p>Im Gedenkakt am 8. Mai 2025 wurden die ersten Prototypen der Namenssteine enthüllt. Zwei davon sind stellvertretend allen Opfern des Lagerkomplexes Reichenau gewidmet. Der erste Prototyp, der einer Einzelperson gewidmet ist, ist für Jakub Justman, der im Alter von 49 Jahren ermordet wurde.</p>
+                                
+                                <p>Die jüdische Familie Justman stammt ursprünglich aus Polen: Jakob Justman flüchtete gemeinsam mit seiner Tocher Leokadia Justman aus den Ghettos von Warschau und Piotrków, seine Frau Sofia Justman wurde im Vernichtungslager Treblinka ermordet. Jakub und Leokadia Justman fanden zuerst in Seefeld, dann in Innsbruck unter falscher Identität Unterkunft und Arbeit. Nach einem Verrat wurden beide von der Gestapo verhaftet. Jakub Justman wurde am 24. April 1944 im Lager Reichenau ermordet. Sein Grab ist heute im jüdischen Teil des Innsbrucker Westfriedhofs zu finden.</p>
+                            </div>
+                            <div class="about-image">
+                                <div class="zoomable-image-container">
+                                    <img src="assets/groundbreaking2.jpg" alt="Gedenkakt am 8. Mai 2025 mit Jeffrey Wisnicki, Landeshauptmann Anton Mattle und Bürgermeister Johannes Anzengruber bei der Enthüllung der ersten Namenssteine" class="zoomable-image">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Impressum Modal -->
+    <div id="impressum-modal" class="impressum-modal">
+        <div class="impressum-content">
+            <button class="impressum-close" onclick="closeImpressum()">
+                <span class="material-icons">close</span>
+            </button>
+            <h2>Impressum</h2>
+            <div class="impressum-body">
+                <p><strong>Landeshauptstadt Innsbruck</strong></p>
+                <p>Magistratsabteilung V - Kultur<br>
+                Herzog-Friedrich-Straße 21<br>
+                6020 Innsbruck<br>
+                Telefon: +43 (0) 512 53 60-0</p>
+                <p>Datenverarbeitungsnummer (DVR): 0059331<br>
+                Umsatzsteueridentifikationsnummer (UID): ATU 36832905<br>
+                Tiroler Sparkasse Bank-AG<br>
+                IBAN: AT20 2050 3033 0192 0330<br>
+                BIC: SPIHAT22XX</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-consent" class="cookie-consent" style="display: none;">
+        <div class="cookie-content">
+            <p>Diese Website verwendet Karten basierend auf OpenStreetMap. Es werden keine Tracking-Cookies verwendet. Weitere Informationen finden Sie in unserer <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+            <div class="cookie-buttons">
+                <button id="cookie-accept" class="cookie-btn cookie-accept">Akzeptieren</button>
+                <button id="cookie-reject" class="cookie-btn cookie-reject">Ablehnen</button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-links">
+                    <a href="datenschutz.html">Datenschutz</a>
+                    <a href="impressum.html">Impressum</a>
+                    <a href="barrierefreiheit.html">Barrierefreiheitserklärung</a>
+                </div>
+                <div class="footer-logos">
+                    <img src="assets/gor-logo.svg" alt="GoR Logo" class="footer-logo">
+                    <img src="assets/ibk-logo.svg" alt="IBK Logo" class="footer-logo">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="debug.js"></script>
+    <script src="debug-maps.js"></script>
+    <!-- <script src="simple-map.js"></script> -->
+    <script src="js/map.js"></script>
+</body>
+</html>
