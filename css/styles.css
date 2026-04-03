@@ -2123,7 +2123,7 @@ img:not([src$=".svg"]) {
     position: relative;
     width: 100%;
     height: 400px;
-    background: #EEE;
+    /* background: #EEE; */
     border-radius: 4px;
     overflow: hidden;
     margin: 2rem 0;
@@ -2162,7 +2162,13 @@ img:not([src$=".svg"]) {
 
 @media (max-width: 768px) {
     .landscape-pattern-container {
-        height: 300px;
+        height: auto;
+    }
+    
+    .landscape-pattern-canvas {
+        width: 100%;
+        height: auto;
+        display: block;
     }
     
     .pattern-overlay {

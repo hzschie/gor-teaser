@@ -630,7 +630,7 @@ function initializeLandscapePatternAnimation() {
         const columns = Math.floor(w / l) + 2;
         
         // Set background
-        ctx.fillStyle = "#EEE";
+        ctx.fillStyle = "#e5e9f1";
         ctx.fillRect(0, 0, w, h);
         
         // Draw tiles
