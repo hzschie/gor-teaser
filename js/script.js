@@ -747,3 +747,66 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 });
+
+// Image Carousel for "Der Bauprozess"
+document.addEventListener('DOMContentLoaded', function() {
+    const carouselImage = document.getElementById('carousel-image');
+    const carouselDescription = document.getElementById('carousel-description');
+    const prevBtn = document.getElementById('carousel-prev');
+    const nextBtn = document.getElementById('carousel-next');
+    
+    // Check if carousel elements exist on this page
+    if (!carouselImage || !prevBtn || !nextBtn) {
+        return;
+    }
+    
+    // Array of images with descriptions
+    const images = [
+        { src: 'assets/images-website/gor_01.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_02.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_03.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_04.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_05.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_06.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_07.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_08.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_09.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_10.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_11.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_12.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_13.jpg', description: 'Bauprozess des Gedenkorts Reichenau' }
+    ];
+    
+    let currentIndex = 0;
+    
+    function updateImage() {
+        carouselImage.src = images[currentIndex].src;
+        carouselImage.alt = images[currentIndex].description;
+        carouselDescription.textContent = images[currentIndex].description;
+    }
+    
+    function showNext() {
+        currentIndex = (currentIndex + 1) % images.length;
+        updateImage();
+    }
+    
+    function showPrev() {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        updateImage();
+    }
+    
+    nextBtn.addEventListener('click', showNext);
+    prevBtn.addEventListener('click', showPrev);
+    
+    // Initialize with first image
+    updateImage();
+    
+    // Optional: Add keyboard navigation
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') {
+            showNext();
+        } else if (e.key === 'ArrowLeft') {
+            showPrev();
+        }
+    });
+});

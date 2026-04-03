@@ -2186,6 +2186,92 @@ img:not([src$=".svg"]) {
     }
 }
 
+/* Image Carousel */
+.carousel-container {
+    width: 100%;
+    margin: 2rem 0;
+}
+
+.carousel-image-wrapper {
+    width: 100%;
+    max-height: 600px;
+    overflow: hidden;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #f5f5f5;
+}
+
+.carousel-image {
+    width: 100%;
+    height: auto;
+    display: block;
+    object-fit: contain;
+}
+
+.carousel-description-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    gap: 2rem;
+}
+
+.carousel-description {
+    font-size: 0.95rem;
+    color: #263238;
+    line-height: 1.5;
+    flex: 1;
+    text-align: left;
+    margin: 0;
+}
+
+.carousel-controls {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.carousel-btn {
+    background: none;
+    color: #000;
+    border: none;
+    padding: 0;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: opacity 0.3s ease;
+}
+
+.carousel-btn:hover {
+    opacity: 0.6;
+}
+
+.carousel-btn:active {
+    transform: scale(0.95);
+}
+
+@media (max-width: 768px) {
+    .carousel-image-wrapper {
+        max-height: 400px;
+@media (max-width: 768px) {
+    .carousel-image-wrapper {
+        max-height: 400px;
+    }
+    
+    .carousel-description-wrapper {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+    }
+    
+    .carousel-btn {
+        font-size: 1.25rem;
+    }
+}
+
 /* Cookie Consent Banner */
 .cookie-consent {
     position: fixed;
