@@ -2256,9 +2256,6 @@ img:not([src$=".svg"]) {
 @media (max-width: 768px) {
     .carousel-image-wrapper {
         max-height: 400px;
-@media (max-width: 768px) {
-    .carousel-image-wrapper {
-        max-height: 400px;
     }
     
     .carousel-description-wrapper {
