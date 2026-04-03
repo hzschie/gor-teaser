@@ -1088,7 +1088,8 @@ h2.section-title {
 .memorial-feature h3 {
     color: #2D3C5B;
     margin-bottom: 0.5rem;
-    font-size: 2rem;
+    font-size: 4.5rem;
+    line-height: 4.5rem;
     font-weight: 400;
     font-family: 'Untitled Serif', Georgia, serif;
 }
@@ -1652,6 +1653,22 @@ body.subpage {
     h2.section-title {
         font-size: 2rem;
         line-height: 2rem;
+    }
+
+    .memorial-feature h3 {
+        font-size: 2rem;
+        line-height: 2rem;
+    }
+
+    .memorial-feature {
+        max-width: 100%;
+        overflow: hidden;
+    }
+
+    .memorial-feature img,
+    .memorial-img {
+        max-width: 100%;
+        height: auto;
     }
 
     .nav-container {
