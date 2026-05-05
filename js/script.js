@@ -774,7 +774,8 @@ document.addEventListener('DOMContentLoaded', function() {
         { src: 'assets/images-website/gor_10.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
         { src: 'assets/images-website/gor_11.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
         { src: 'assets/images-website/gor_12.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
-        { src: 'assets/images-website/gor_13.jpg', description: 'Bauprozess des Gedenkorts Reichenau' }
+        { src: 'assets/images-website/gor_13.jpg', description: 'Bauprozess des Gedenkorts Reichenau' },
+        { src: 'assets/images-website/gor_14.jpg', description: 'Bauprozess des Gedenkorts Reichenau' }
     ];
     
     let currentIndex = 0;

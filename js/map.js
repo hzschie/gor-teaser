@@ -661,11 +661,9 @@ class BirthplacesMap {
         this.map.on('load', () => {
             this.setMapLanguageToGerman();
             this.addBirthplacesData();
+            this.setupZoomControls();
             // this.fitMapToBounds();
         });
-        
-        // Add navigation controls
-        this.map.addControl(new maplibregl.NavigationControl(), 'top-right');
     }
     
     addBirthplacesData() {
@@ -889,5 +887,22 @@ class BirthplacesMap {
                 }, 1500);
             }
         }, { passive: true });
+    }
+    
+    setupZoomControls() {
+        const zoomInBtn = document.getElementById('birthplaces-zoom-in-btn');
+        const zoomOutBtn = document.getElementById('birthplaces-zoom-out-btn');
+
+        if (zoomInBtn) {
+            zoomInBtn.addEventListener('click', () => {
+                this.map.zoomIn();
+            });
+        }
+
+        if (zoomOutBtn) {
+            zoomOutBtn.addEventListener('click', () => {
+                this.map.zoomOut();
+            });
+        }
     }
 }
