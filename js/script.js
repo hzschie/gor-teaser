@@ -2,8 +2,23 @@
 const hamburger = document.getElementById('hamburger-menu');
 const mobileMenu = document.getElementById('mobile-menu');
 const mobileMenuClose = document.getElementById('mobile-menu-close');
+const navLinks = document.querySelectorAll('.nav-link');
+const navMenu = document.querySelector('.nav-menu');
 const header = document.querySelector('.header');
 const form = document.querySelector('.form');
+
+// Mobile menu functions
+function toggleMobileMenu() {
+    if (mobileMenu) {
+        mobileMenu.classList.toggle('open');
+    }
+}
+
+function closeMobileMenu() {
+    if (mobileMenu) {
+        mobileMenu.classList.remove('open');
+    }
+}
 
 if (hamburger && mobileMenu && mobileMenuClose) {
     hamburger.addEventListener('click', function() {
@@ -48,6 +63,33 @@ function toggleZoom() {
         container.classList.add('zoomed');
         document.body.style.overflow = 'hidden';
     }
+}
+
+// Mobile image comparison button toggle
+function initializeMobileComparison() {
+    const container = document.querySelector('.image-comparison-container');
+    const labels = document.querySelectorAll('.comparison-labels button');
+    
+    if (!container || labels.length === 0) return;
+    
+    labels.forEach(button => {
+        button.addEventListener('click', function() {
+            const year = this.getAttribute('data-year');
+            
+            // Remove active class from all buttons
+            labels.forEach(label => label.classList.remove('active'));
+            
+            // Add active class to clicked button
+            this.classList.add('active');
+            
+            // Toggle the image display
+            if (year === '2024') {
+                container.classList.add('show-2024');
+            } else {
+                container.classList.remove('show-2024');
+            }
+        });
+    });
 }
 
 // Smooth scrolling to sections
@@ -274,29 +316,33 @@ function setupKeyboardNavigation() {
         }
         
         // Enter key on hamburger toggles menu
-        if (e.key === 'Enter' && e.target === hamburger) {
+        if (hamburger && e.key === 'Enter' && e.target === hamburger) {
             toggleMobileMenu();
         }
     });
     
     // Make hamburger focusable
-    hamburger.setAttribute('tabindex', '0');
+    if (hamburger) {
+        hamburger.setAttribute('tabindex', '0');
+    }
 }
 
 // Initialize everything when DOM is loaded
 document.addEventListener('DOMContentLoaded', function() {
     console.log('DOM Content Loaded - Initializing scripts');
     
-    // Event listeners
-    if (hamburger) {
-        hamburger.addEventListener('click', toggleMobileMenu);
-    }
-    
+    // Event listeners for navigation links
     navLinks.forEach(link => {
         link.addEventListener('click', (e) => {
-            e.preventDefault();
-            const targetId = link.getAttribute('href').substring(1);
-            scrollToSection(targetId);
+            const href = link.getAttribute('href');
+            
+            // Only prevent default and scroll for anchor links (starting with #)
+            if (href && href.startsWith('#')) {
+                e.preventDefault();
+                const targetId = href.substring(1);
+                scrollToSection(targetId);
+            }
+            // For regular links (like publikationen.html), let the default behavior proceed
         });
     });
     
@@ -314,6 +360,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setupLazyLoading();
     updateActiveNavLink();
     setupKeyboardNavigation();
+    initializeMobileComparison();
     
     // Add CSS for active nav links
     const style = document.createElement('style');
@@ -330,7 +377,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // Utility function to handle clicks outside mobile menu
 document.addEventListener('click', (e) => {
-    if (!hamburger.contains(e.target) && !navMenu.contains(e.target)) {
+    if (hamburger && navMenu && !hamburger.contains(e.target) && !navMenu.contains(e.target)) {
         closeMobileMenu();
     }
 });
@@ -630,7 +677,7 @@ function initializeLandscapePatternAnimation() {
         const columns = Math.floor(w / l) + 2;
         
         // Set background
-        ctx.fillStyle = "#e5e9f1";
+        ctx.fillStyle = "#ffffff";//"#e5e9f1";
         ctx.fillRect(0, 0, w, h);
         
         // Draw tiles
@@ -810,4 +857,41 @@ document.addEventListener('DOMContentLoaded', function() {
             showPrev();
         }
     });
+});
+
+// Sticky Section Headers — scroll event approach
+// Uses a passive scroll listener that reads each sentinel's natural (non-sticky)
+// getBoundingClientRect().top. Since the sentinel is a zero-height element placed
+// before the h2 (and is not itself sticky), its position is unaffected by any
+// font-size change on the h2. Scroll events also don't re-fire due to DOM changes,
+// so there is no feedback loop.
+document.addEventListener('DOMContentLoaded', function() {
+    const headerEl = document.querySelector('.header');
+    const headerHeight = headerEl ? headerEl.offsetHeight : 70;
+
+    document.documentElement.style.setProperty('--sticky-top', headerHeight + 'px');
+
+    const sections = Array.from(document.querySelectorAll('section.about'));
+    const pairs = []; // { sentinel, title }
+
+    sections.forEach(section => {
+        const title = section.querySelector('.section-title');
+        if (!title) return;
+        const sentinel = document.createElement('div');
+        sentinel.className = 'sticky-sentinel';
+        title.parentNode.insertBefore(sentinel, title);
+        pairs.push({ sentinel, title });
+    });
+
+    function updateSticky() {
+        pairs.forEach(({ sentinel, title }) => {
+            const top = sentinel.getBoundingClientRect().top;
+            title.classList.toggle('is-stuck', top <= headerHeight);
+        });
+    }
+
+    // Run once on load (page may already be scrolled)
+    updateSticky();
+
+    window.addEventListener('scroll', updateSticky, { passive: true });
 });

@@ -38,7 +38,7 @@ class TirolCampsMap {
     async loadCampsData() {
         try {
             console.log('Loading CSV data...');
-            const response = await fetch('assets/NS_Lager-Österreich-2019-12-02_öffentlich.csv');
+            const response = await fetch('assets/ns_lager.csv');
             if (!response.ok) {
                 throw new Error(`HTTP error! status: ${response.status}`);
             }

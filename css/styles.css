@@ -63,6 +63,12 @@
     font-display: swap;
 }
 
+/* Global custom properties — defined on :root so they inherit to all elements,
+   including h2s that are direct children of section.about (not wrapped in .container) */
+:root {
+    --c-pad: 20px; /* horizontal container padding; used for sticky title alignment */
+}
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -75,7 +81,7 @@ html {
     height: 100%;
     width: 100%;
     max-width: 100vw;
-    overflow-x: hidden;
+    overflow-x: clip; /* clip doesn't create a scroll container, preserving position:sticky */
 }
 
 body {
@@ -88,7 +94,7 @@ body {
     flex-direction: column;
     width: 100%;
     max-width: 100vw;
-    overflow-x: hidden;
+    overflow-x: clip; /* clip doesn't create a scroll container, preserving position:sticky */
 }
 
 main {
@@ -103,7 +109,7 @@ main {
     width: 100%;
     max-width: 1000px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 0 var(--c-pad);
     box-sizing: border-box;
 }
 
@@ -285,11 +291,9 @@ div[id] {
     width: 100% !important;
 }
 .mobile-footer-logos .footer-logo {
-    /* height: 55px; */
-    
-    /* width: calc(100% - 20px); */
-    margin: 0 0 0 0;
-    justify-content: space-between;
+    height: 55px;
+    width: auto;
+    margin: 0;
 }
 
 /* Hero Section */
@@ -443,8 +447,57 @@ h2.section-title {
     text-align: left;
     margin-bottom: 3rem;
     color: #2D3C5B;
-    position: relative;
     font-family: 'Untitled Serif', Georgia, serif;
+    position: sticky;
+    top: var(--sticky-top, 70px);
+    z-index: 9999; /* second highest after .header (10000) */
+    background-color: transparent;
+    /* Only background-color and box-shadow transition — layout transitions on sticky
+       elements shift the flow placeholder and cause scroll-anchor jitter */
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Full-viewport background strip on the sticky h2, via pseudo-element so the
+   text stays aligned with the container while the bar bleeds edge to edge.
+   Formula: min(-pad, 500px - 50vw - pad) pulls left edge to viewport x=0
+   whether or not the container is constrained by its max-width. */
+.section-title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: min(calc(-1 * var(--c-pad, 20px)), calc(500px - 50vw - var(--c-pad, 20px)));
+    width: 100vw;
+    background: transparent;
+    box-shadow: none;
+    z-index: -1;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.section-title.is-stuck {
+    font-size: 2.25rem;
+    line-height: 2.25rem;
+    padding: 0.75rem 0;
+}
+
+.section-title.is-stuck::before {
+    background: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* When h2 is a direct child of .about (not wrapped in .container), its own box
+   already spans full width — the ::before left offset must be 0, not the
+   container-relative inset used for the other sections. */
+.about > .section-title::before,
+.about > h2.section-title::before {
+    left: 0;
+}
+
+/* Zero-height sentinel placed before each section title to track natural scroll position */
+.sticky-sentinel {
+    height: 0;
+    pointer-events: none;
+    visibility: hidden;
 }
 
 /* .section-title::after {
@@ -464,10 +517,19 @@ h2.section-title {
     }
 } */
 
+/* When section-title is a direct child of .about (not wrapped in .container),
+   indent it to match the container layout */
+.about > .section-title,
+.about > h2.section-title {
+    padding-left: max(var(--c-pad, 20px), calc((100% - 1000px) / 2 + var(--c-pad, 20px)));
+    padding-right: max(var(--c-pad, 20px), calc((100% - 1000px) / 2 + var(--c-pad, 20px)));
+}
+
 /* About Section */
 .about {
     padding: 50px 0;
     background-color: #fff;
+    overflow-anchor: none; /* prevent scroll anchoring from interfering with position:sticky */
 }
 
 .about-content {
@@ -786,6 +848,18 @@ h2.section-title {
     font-size: 0.9rem;
     font-weight: 600;
     font-family: 'Graphik', sans-serif;
+    border: none;
+    cursor: default;
+    transition: all 0.3s ease;
+}
+
+/* Mobile and desktop description text */
+.mobile-description {
+    display: none !important;
+}
+
+.desktop-description {
+    display: block !important;
 }
 
 /* Zoom button */
@@ -941,6 +1015,54 @@ h2.section-title {
 }
 
 @media (max-width: 768px) {
+    /* Hide slider on mobile */
+    .comparison-slider {
+        display: none;
+    }
+    
+    /* Make labels into clickable buttons on mobile */
+    .comparison-labels {
+        pointer-events: auto;
+        bottom: 15px;
+        padding: 0 15px;
+        justify-content: space-between;
+    }
+    
+    .label-before,
+    .label-after {
+        cursor: pointer;
+        opacity: 0.6;
+        border: 2px solid transparent;
+    }
+    
+    .label-before.active,
+    .label-after.active {
+        opacity: 1;
+        background: rgba(44, 85, 48, 0.9);
+        border-color: rgba(255, 255, 255, 0.6);
+        transform: scale(1.05);
+    }
+    
+    /* Add fade transition for foreground image on mobile */
+    .image-foreground {
+        transition: opacity 0.5s ease;
+        clip-path: none !important; /* Remove mask on mobile, show full image */
+    }
+    
+    .image-comparison-container.show-2024 .image-foreground {
+        opacity: 0;
+    }
+    
+    /* Swap description text on mobile */
+    .mobile-description {
+        display: block !important;
+        font-size: 0.8rem;
+    }
+    
+    .desktop-description {
+        display: none !important;
+    }
+    
     .zoom-button {
         width: 36px;
         height: 36px;
@@ -968,8 +1090,8 @@ h2.section-title {
 
 /* Gallery Section */
 .gallery {
-    padding: 100px 0;
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 50px 0;
+    background: #ffffff;
 }
 
 .gallery-grid {
@@ -1048,8 +1170,7 @@ h2.section-title {
 
 .history-detailed {
     margin-top: 4rem;
-    padding-top: 3rem;
-    border-top: 2px solid #e9ecef;
+    /* padding-top: 3rem; */
 }
 
 .history-detailed h3 {
@@ -1099,14 +1220,14 @@ h2.section-title {
 .memorial-feature h3 {
     color: #2D3C5B;
     margin-bottom: 0.5rem;
-    font-size: 4.5rem;
-    line-height: 4.5rem;
+    font-size: 2.5rem;
+    line-height: 2.5rem;
     font-weight: 400;
     font-family: 'Untitled Serif', Georgia, serif;
 }
 
 .memorial-feature p {
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     color: #263238;
     line-height: 1.7;
 }
@@ -1577,6 +1698,7 @@ body.subpage {
     .memorial-hero .section-intro {
         font-size: 1.1rem;
         line-height: 1.6;
+        text-align: left;
     }
 
     .about-content,
@@ -1673,6 +1795,13 @@ body.subpage {
         line-height: 2rem;
     }
 
+    /* Sticky section title on mobile */
+    .section-title.is-stuck {
+        font-size: 1.4rem;
+        line-height: 1.4rem;
+        padding: 0.5rem 0;
+    }
+
     .memorial-feature h3 {
         font-size: 2rem;
         line-height: 2rem;
@@ -1693,8 +1822,12 @@ body.subpage {
         padding: 0 15px;
     }
 
+    :root {
+        --c-pad: 15px;
+    }
+
     .container {
-        padding: 0 15px;
+        /* padding inherits from :root --c-pad above */
     }
 
     .footer-content {
@@ -1721,9 +1854,8 @@ body.subpage {
     }
 
     .footer-logo {
-        height: 70px;
-        flex: 1;
-        max-width: calc(50% - 10px);
+        height: 55px;
+        width: auto;
         object-fit: contain;
     }
 
@@ -1780,12 +1912,17 @@ img:not([src$=".svg"]) {
     background-color: #fff;
 }
 
+#map-wrapper {
+    position: relative;
+    /* no z-index — keeps map tiles in normal stacking order below sticky h2 */
+    margin-bottom: 4rem;
+}
+
 #map-container {
     position: relative;
     height: 520px;
     border-radius: 5px;
     overflow: hidden;
-    margin-bottom: 4rem;
     /* box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1); */
 }
 
@@ -1798,7 +1935,7 @@ img:not([src$=".svg"]) {
     padding: .5rem;
     border-radius: 4px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    z-index: 100;
+    z-index: 200;
     max-width: 280px;
 }
 
@@ -2143,7 +2280,7 @@ img:not([src$=".svg"]) {
     /* background: #EEE; */
     border-radius: 4px;
     overflow: hidden;
-    margin: 2rem 0;
+    /* margin: 2rem 0; */
     /* box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); */
 }
 
@@ -2206,7 +2343,7 @@ img:not([src$=".svg"]) {
 /* Image Carousel */
 .carousel-container {
     width: 100%;
-    margin: 2rem 0;
+    /* margin: 2rem 0; */
 }
 
 .carousel-image-wrapper {

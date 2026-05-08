@@ -96,10 +96,10 @@
                                     <input class="comparison-slider" type="range" min="0" max="100" step="0.1" value="50" 
                                            oninput="this.closest('.image-comparison-container').style.setProperty('--range', this.value + '%')">
                                     
-                                    <!-- Labels -->
+                                    <!-- Labels / Buttons for mobile -->
                                     <div class="comparison-labels">
-                                        <span class="label-before">1945</span>
-                                        <span class="label-after">2024</span>
+                                        <button class="label-before active" data-year="1945">1945</button>
+                                        <button class="label-after" data-year="2024">2024</button>
                                     </div>
                                     
                                     <!-- Close Button (only visible when zoomed) -->
@@ -116,7 +116,8 @@
                             
                             <!-- Image Description -->
                             <div class="image-description">
-                                <p>Ziehen Sie den Schieberegler, um die 1945 sichtbaren Lagerstrukturen mit der modernen Industrie- und Gewerbeentwicklung zu vergleichen, die heute das Gelände einnimmt.</p>
+                                <p class="desktop-description">Ziehen Sie den Schieberegler, um die 1945 sichtbaren Lagerstrukturen mit der modernen Industrie- und Gewerbeentwicklung zu vergleichen, die heute das Gelände einnimmt.</p>
+                                <p class="mobile-description">Klicken Sie auf die Jahreszahlen, um zwischen den Luftbildern von 1945 und 2024 zu wechseln und die Transformation des Geländes zu vergleichen.</p>
                             </div>
                         </div>
                     </div>
@@ -133,8 +134,8 @@
                     <p>Diese Karte von Österreich zeigt alle bekannten NS-Lager, basierend auf einer Datenbank des Historikers Horst Schreiber. Klicken Sie auf einen Marker, um mehr Details zum Lager zu sehen.</p>
                     
                     <!-- Historical Context Map -->
-                    <div id="map-container">
-                        <!-- Filter Controls -->
+                    <div id="map-wrapper">
+                        <!-- Filter Controls (outside #map-container to escape its overflow:hidden stacking context) -->
                         <div id="map-controls" class="map-controls">
                             <button id="filter-toggle-btn" class="filter-toggle-btn" aria-label="Toggle filters">
                                 <span class="material-icons">filter_list</span>
@@ -173,6 +174,8 @@
                             </div>
                         </div>
 
+                        <div id="map-container">
+
                         <!-- Map Display -->
                         <div id="mapbox-map"></div>
 
@@ -200,7 +203,8 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                        </div> <!-- /#map-container -->
+                    </div> <!-- /#map-wrapper -->
                     
                     <div class="about-content">
                         <div class="about-text">
@@ -284,17 +288,14 @@
         </section>
 
         <!-- The New Memorial Section -->
-        <section id="memorial" class="memorial-hero">
+        <section id="memorial" class="about">
+            <h2 class="section-title">Der neue Gedenkort</h2>
             <div class="container">
-                <div class="memorial-hero-content">
-                    <h2 class="section-title">Der neue Gedenkort</h2>
-                    <p class="section-intro">Aus der Geschichte des Ortes und des Gedenkens heraus ist der Auftrag erwachsen, sich dem Lagergelände in der Rossau und den Schicksalen der Menschen, die mit ihm verbunden sind, erneut zu widmen. Am Beginn stand intensive zeitgeschichtliche wie archäologische Forschung, um einen aktuellen Forschungsstand zu gewährleisten. Auf der Basis des Berichtes und der Empfehlungen der Kommission zur Neugestaltung des Gedenkortes traf der Gemeinderat der Landeshauptstadt Innsbruck die Grundsatzentscheidung zur Errichtung einer zeitgemäßen Gedenkstätte. Es folgte ein mehrstufiger, internationaler Wettbewerb, der sowohl die architektonische als auch die künstlerische und die didaktische Gestaltung umfasste. Das Siegerprojekt der Werkgemeinschaft Heike Bablick · Ricarda Denzer · Karl-Heinz Machat · Bettina Schlorhaufer · Hermann Zschiegner wird im Folgenden vorgestellt.</p>
+                <div class="memorial-content">
+                    <p>Aus der Geschichte des Ortes und des Gedenkens heraus ist der Auftrag erwachsen, sich dem Lagergelände in der Rossau und den Schicksalen der Menschen, die mit ihm verbunden sind, erneut zu widmen. Am Beginn stand intensive zeitgeschichtliche wie archäologische Forschung, um einen aktuellen Forschungsstand zu gewährleisten. Auf der Basis des Berichtes und der Empfehlungen der Kommission zur Neugestaltung des Gedenkortes traf der Gemeinderat der Landeshauptstadt Innsbruck die Grundsatzentscheidung zur Errichtung einer zeitgemäßen Gedenkstätte. Es folgte ein mehrstufiger, internationaler Wettbewerb, der sowohl die architektonische als auch die künstlerische und die didaktische Gestaltung umfasste. Das Siegerprojekt der Werkgemeinschaft Heike Bablick · Ricarda Denzer · Karl-Heinz Machat · Bettina Schlorhaufer · Hermann Zschiegner wird im Folgenden vorgestellt.</p>
                 </div>
             </div>
-        </section>
-
-        <!-- Memorial Gallery Section -->
-        <section class="gallery">
+        <div class="gallery">
             <div class="container">
                 <div class="gallery-grid">
                     <div class="gallery-item">
@@ -413,6 +414,7 @@ Ein durchgehendes grafisches Konzept sorgt für gut wiedererkennbare Erscheinung
                         </div>
                 </div>
             </div>
+        </div>
         </section>
     </main>
 
@@ -468,8 +470,8 @@ Ein durchgehendes grafisches Konzept sorgt für gut wiedererkennbare Erscheinung
     </footer>
 
     <script src="js/script.js"></script>
-    <script src="debug.js"></script>
-    <script src="debug-maps.js"></script>
+    <!-- <script src="debug.js"></script> -->
+    <!-- <script src="debug-maps.js"></script> -->
     <!-- <script src="simple-map.js"></script> -->
     <script src="js/map.js"></script>
 </body>
